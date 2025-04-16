@@ -10,7 +10,15 @@
           "ref": "project",
           "spec": {
             "name": "posh-locket",
-            "region": "us-central"
+            "networking": {
+              "tailscale": {
+                "authKeyTags": [],
+                "enabled": false
+              },
+              "allowedIngressProjects": []
+            },
+            "region": "us-central",
+            "description": ""
           }
         },
         {
@@ -30,7 +38,7 @@
   "description": "",
   "options": {
     "autorun": true,
-    "concurrencyPolicy": "allow",
+    "concurrencyPolicy": "forbid",
     "runOnUpdate": false
   },
   "gitops": {
