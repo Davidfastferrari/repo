@@ -1,25 +1,37 @@
-# Stage 1 - Build the app
+# -------- STAGE 1: BUILD --------
 FROM rust:1.76 as builder
 
-# Set working directory inside the container
 WORKDIR /app
 
-# Cache dependencies
+# Copy manifest files and dummy src to warm up the dependency cache
 COPY Cargo.toml .
+COPY Cargo.lock .
+
+# Create a dummy src/main.rs for cache
+RUN mkdir src && echo "fn main() {}" > src/main.rs
+RUN cargo build --release || true
+
+# Now copy actual project files
+COPY benches/ benches/
 COPY src/ src/
+COPY contracts/ contracts/
+
 RUN cargo build --release
 
-# Stage 2 - Runtime image
+# -------- STAGE 2: RUN --------
 FROM debian:buster-slim
 
-# Install needed system libs
-RUN apt-get update && apt-get install -y libssl-dev ca-certificates && rm -rf /var/lib/apt/lists/*
+# Install needed system libraries
+RUN apt-get update && apt-get install -y \
+    libssl-dev \
+    pkg-config \
+    ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy compiled binary from the build stage
+# Copy compiled binary from builder
 COPY --from=builder /app/target/release/rust /app/
 
-# Run the binary
+# Start the Rust binary
 CMD ["./rust"]
