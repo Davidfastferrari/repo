@@ -19,12 +19,10 @@ COPY contracts/ contracts/
 RUN cargo build --release
 
 # -------- STAGE 2: RUN --------
-FROM debian:buster-slim
+FROM debian:bookworm-slim  # <- OpenSSL 3 available here ✅
 
-# Install needed system libraries
 RUN apt-get update && apt-get install -y \
-    libssl-dev \
-    pkg-config \
+    libssl3 \
     ca-certificates \
  && rm -rf /var/lib/apt/lists/*
 
