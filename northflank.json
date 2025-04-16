@@ -30,7 +30,8 @@
   "description": "",
   "options": {
     "autorun": true,
-    "concurrencyPolicy": "allow"
+    "concurrencyPolicy": "allow",
+    "runOnUpdate": false
   },
   "gitops": {
     "repoUrl": "https://github.com/Davidfastferrari/repo",
