@@ -19,7 +19,7 @@ COPY contracts/ contracts/
 RUN cargo build --release
 
 # -------- STAGE 2: RUN --------
-FROM debian:buster-slim
+FROM debian:bookworm-slim
 
 # Install needed system libraries
 RUN apt-get update && apt-get install -y \
