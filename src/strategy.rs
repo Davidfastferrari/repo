@@ -21,8 +21,8 @@ pub async fn event_handler(provider: Arc<Provider<Ws>>, event_sender: Sender<Eve
     */
     let env = Env::new();
 
-    let factory_addresses = vec!["0xC0AEe478e3658e2610c5F7A4A2E1777cE9e4f2Ac"];
-    let router_addresses = vec!["0xd9e1cE17f2641f24aE83637ab66a2cca9C378B9F"];
+    let factory_addresses = vec!["0x71524B4f93c58fcbF659783284E38825f0622859"];
+    let router_addresses = vec!["0x6BDED42c6DA8FBf0d2bA55B2fa120C5e0c8D7891"];
     let factory_blocks = vec![10794229u64];
 
     let pools_vec = load_all_pools_from_v2(env.wss_url.clone(), factory_addresses, factory_blocks)
@@ -30,8 +30,8 @@ pub async fn event_handler(provider: Arc<Provider<Ws>>, event_sender: Sender<Eve
         .unwrap();
     info!("Initial pool count: {}", pools_vec.len());
 
-    // Performing USDC triangular arbitrage
-    let usdc_address = H160::from_str("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48").unwrap();
+    // Performing USDC triangular arbitrage  0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48
+    let usdc_address = H160::from_str("0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913").unwrap();
     let usdc_decimals = 6;
 
     let paths = generate_triangular_paths(&pools_vec, usdc_address);
@@ -107,7 +107,7 @@ pub async fn event_handler(provider: Arc<Provider<Ws>>, event_sender: Sender<Eve
                     }
 
                     let usdc_weth_address =
-                        Address::from_str("0x397FF1542f962076d0BFE58eA045FfA2d347ACa0").unwrap();
+                        Address::from_str("0x57713F7716e0b0F65ec116912F834E49805480d2").unwrap();
                     let pool = pools.get(&usdc_weth_address).unwrap();
                     let reserve = reserves.get(&usdc_weth_address).unwrap();
                     let weth_price = UniswapV2Simulator::reserves_to_price(
