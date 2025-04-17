@@ -16,6 +16,7 @@ COPY benches/ benches/
 COPY src/ src/
 COPY contracts/ contracts/
 
+
 RUN cargo build --release
 
 # -------- STAGE 2: RUN --------
@@ -29,8 +30,12 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy compiled binary from builder
+# Copy binary and ABI files
 COPY --from=builder /app/target/release/rust /app/
+COPY --from=builder /app/src/abi /app/abi  # ✅ This line is critical!
+
+# Enable backtraces
+ENV RUST_BACKTRACE=1
 
 # Start the Rust binary
 CMD ["./rust"]
