@@ -11,7 +11,9 @@ pub static ZERO_ADDRESS: Lazy<Address> =
     Lazy::new(|| Address::from_str("0x0000000000000000000000000000000000000000").unwrap());
 
 pub fn get_env(key: &str) -> String {
-    std::env::var(key).unwrap()
+    std::env::var(key).unwrap_or_else(|_| {
+        panic!("Environment variable `{}` is not set", key)
+    })
 }
 
 #[derive(Debug, Clone)]
