@@ -71,7 +71,10 @@ pub async fn load_all_pools_from_v2(
     from_blocks: Vec<u64>,
 ) -> Result<Vec<Pool>> {
     // Load from cached file if the file exists
-    let file_path = Path::new("src/.cached-pools.csv");
+   // let file_path = Path::new("src/.cached-pools.csv");
+   let file_path = Path::new(".cache/pools.csv");
+   std::fs::create_dir_all(".cache")?;
+
     if file_path.exists() {
         let mut reader = csv::Reader::from_path(file_path)?;
 
