@@ -107,7 +107,7 @@ pub async fn event_handler(provider: Arc<Provider<Ws>>, event_sender: Sender<Eve
                     }
 
                     let usdc_weth_address =
-                        Address::from_str("0x397FF1542f962076d0BFE58eA045FfA2d347ACa0").unwrap();
+                        Address::from_str("0x57713F7716e0b0F65ec116912F834E49805480d2").unwrap();
                     let pool = pools.get(&usdc_weth_address).unwrap();
                     let reserve = reserves.get(&usdc_weth_address).unwrap();
                     let weth_price = UniswapV2Simulator::reserves_to_price(
