@@ -30,9 +30,11 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /app
 
-# Copy binary and ABI files
-COPY --from=builder /app/target/release/rust /app/
-COPY --from=builder /app/src/abi /app/abi  # ✅ This line is critical!
+# ✅ Copy compiled binary into current dir as ./rust
+COPY --from=builder /app/target/release/rust ./rust
+
+# ✅ Copy ABI folder as ./abi
+COPY --from=builder /app/src/abi ./abi
 
 # Enable backtraces
 ENV RUST_BACKTRACE=1
